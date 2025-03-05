@@ -1,0 +1,170 @@
+>>>malloy
+source: cpa is duckdb.table('Washington_State_CPAs.csv') extend {
+    measure: Total is count()
+    dimension: `Days of Service` is days(`Original Issue Date` to `Expiration Date`)
+    dimension: `Years of Service` is `Days of Service`/365
+    dimension: `City Clean` is 
+        pick 'unknown' when `City` is null
+        else ucase!(`City`)
+    
+
+
+}
+>>>markdown
+## Lets first see the data overall and a distribution of WA state CPAs from where they came from. Interesting to see WA CPAs from many foreign countries.
+>>>malloy
+# dashboard
+run: cpa -> {
+    aggregate: `Counted Licenses` is count()
+    aggregate: `Counted Countries` is count(Country)
+    aggregate: `Counted Cities` is count(`City Clean`)
+    nest: `Top Countries for WA state CPAs` is {
+        group_by: Country
+        aggregate: Total
+    
+    }
+    nest: `Bottom Countries for WA state CPAs` is {
+        group_by: Country
+        aggregate: Total
+        order_by: Total asc
+    }
+    # bar_chart
+    nest: `Top Countries for WA state CPAs Chart` is {
+        group_by: Country
+        aggregate: Total
+    
+    }
+    nest: `Top City Distribution for WA state CPAs` is {
+        group_by: `City Clean`
+        aggregate: Total
+    }
+    nest: `Bottom City Distribution for WA state CPAs` is {
+        group_by: `City Clean`
+        aggregate: Total
+        order_by: Total asc
+    }
+    # shape_map
+    nest: `State Distribution Shape Map` is {
+        group_by: State
+        aggregate: Total
+    }
+    
+}
+>>>markdown
+## Now looking at the length of time each person had their CPA license
+>>>malloy
+# dashboard
+run: cpa -> {
+--Average length of CPA license held in years
+    aggregate: `Average Lenght of CPA Licenses in Years` is avg(`Years of Service`)
+--Range of most years to least for CPA license holding
+    nest: `Longest CPA License Holders` is {
+        group_by: `First Name`
+        group_by: `Last Name`
+        group_by: `City Clean`
+        group_by: `Years of Service` 
+        order_by: `Years of Service` desc
+    }
+    nest: `Shortest CPA License Holders` is {
+        group_by: `Years of Service` 
+        order_by: `Years of Service` asc
+    }
+--Where the longest CPA license holdings come from on average
+    nest: `Cities with the Longest Average Holding Time for CPA License` is {
+        group_by: `City Clean`
+        aggregate: `Average` is avg(`Years of Service`)
+    }
+
+}
+>>>markdown
+## Looking at a time series analysis of the data
+>>>malloy
+# dashboard
+run: cpa -> {
+    aggregate: `Counted Years` is count(`Original Issue Date`.year)
+    # line_chart
+    nest: `Total Count of New WA CPAs Over Time` is {
+        group_by: `Original Issue Date`.year
+        aggregate: `Sum` is count()
+    }
+    nest: `Total of CPAs Over Time Grouped by City` is {
+        group_by: `City Clean`
+        aggregate: `Total` is count()
+        # line_chart {size=spark y.independent}
+        nest: `By Year` is {
+            group_by: `Original Issue Date`.year
+            aggregate: Counted is count()
+        }
+    }
+--Original Issue Dates Orgznized by Year with Top 10 Citys Tooltip Based on a Sum of Days of Service
+    # bar_chart
+    nest: `Sum of Days of Service Over Time with By City Tooltip` is {
+        group_by: `Original Issue Date`.year
+        aggregate: `Count` is count()
+        # tooltip
+        # bar_chart {y.independent}
+        nest: `By City Tooltip` is {
+            group_by: `City Clean`
+            aggregate: `Sum of Days of Service` is sum(`Days of Service`)
+            limit: 10
+        }
+    }
+--Original Issue Dates Orgznized by Year with Top 10 Citys Tooltip Based on a Sum of Days of Service
+    # bar_chart
+    nest: `Count of WA CPA Licenses by Year with Top 10 Cities Tooltip` is {
+        group_by: `Original Issue Date`.year
+        aggregate: `Count` is count()
+        # tooltip
+        # bar_chart {y.independent}
+        nest: `By City Tooltip` is {
+            group_by: `City Clean`
+            aggregate: `Count of CPA Licenses` is count()
+            limit: 10
+        }
+    }
+--We can see that in both categories there are more CPAs from Tokyo and Seoul than anywhere is the USA
+}
+>>>markdown
+
+## Looking at the CPA License Status
+>>>malloy
+# dashboard
+run: cpa -> {
+    nest: `Types of Status` is {
+        group_by: Status
+        aggregate: Counted is count()
+    }
+    nest: `Global Distribution of Different Status` is {
+        group_by: Status
+        aggregate: Counted is count()
+        # bar_chart {y.independent}
+        nest: `By Country` is {
+            group_by: Country
+            aggregate: Counted is count()
+            limit: 5
+            # tooltip
+            # line_chart
+            nest: `By Year` is {
+                group_by: `Original Issue Date`.Year
+                aggregate: Counted is count()
+            }
+        }
+    }
+    nest: `Location of Where the Assorted Status Comes From` is {
+        group_by: Status
+        aggregate: counted is count()
+        # bar_chart {y.independent}
+        nest: `Status by Country` is {
+            group_by: Country
+            aggregate: Counted is count()
+            limit: 5
+            # tooltip
+            # bar_chart {y.independent}
+            nest: `By City Within Each Country` is {
+                group_by: `City Clean`
+                aggregate: Counted is count()
+                limit: 5
+            }
+        }
+    }
+}
