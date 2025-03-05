@@ -48,8 +48,6 @@ This dataset contains information on **licensed CPAs** in Washington State, incl
 
 ---
 
-## 📈 Charts & Visuals Examples
-
 ## 📊 Example Visualizations  
 
 ### 🌍 CPA Origins Dashboard  
@@ -71,26 +69,6 @@ This dashboard allows users to quickly identify major sources of CPAs in Washing
 ![High Quality Dashboards to Dive Into the Data](image.png)
 
 
-## 📊 Example Visualizations  
-
-### 🏆 Longest CPA License Holders  
-
-This visualization highlights the most experienced CPAs in Washington State—those who have held their licenses for **nearly 70 years!** 🌟 These professionals have dedicated decades to the field, showcasing incredible longevity and expertise in accounting.  
-
-#### 🔹 **Key Visuals:**  
-- **📋 Leaderboard of Longest-Serving CPAs** → A table sorted by `Years of Service`, displaying:  
-  - `First Name` & `Last Name` (identifying the CPA)  
-  - `City Clean` (where they are based)  
-  - `Years of Service` (showcasing their incredible tenure)  
-- **📊 Bar Chart: CPA Longevity** → A visual ranking of CPAs by `Years of Service`, highlighting those with the most years in the profession.  
-
-#### 📈 **Analytical Potential:**  
-This visualization not only recognizes the **dedication and impact** of long-serving CPAs but also helps analyze career longevity trends. Are there geographic patterns in where these long-time professionals are based? How has CPA retention evolved over the decades? Understanding these trends can provide valuable insights into workforce sustainability and career trajectories.  
-
-These CPAs have seen it all—from paper ledgers to AI-driven accounting. That’s legendary! 🏅  
-
-## 📊 Example Visualizations  
-
 ### 🏆 Longest CPA License Holders  
 
 This visualization highlights the most experienced CPAs in Washington State—those who have held their licenses for **nearly 70 years!** 🌟 These professionals have dedicated decades to the field, showcasing incredible longevity and expertise in accounting.  
@@ -109,8 +87,6 @@ These CPAs have seen it all—from paper ledgers to AI-driven accounting. That�
 
 ![Longest CPA License Holders](image-1.png)
 
-
-## 📊 Example Visualizations  
 
 ### ⏳ CPA Growth Over Time by City  
 
@@ -131,8 +107,6 @@ By analyzing this data, we can uncover regional trends and shifts in CPA demand.
 ![Total CPAs Over Time Grouped by City](image-2.png)
 
 
-## 📊 Example Visualizations  
-
 ### 📅 WA CPA Licenses Over Time with Top 10 Cities  
 
 This visualization tracks the number of CPA licenses issued each year in Washington State, providing insights into licensing trends over time. Additionally, it includes a **tooltip** showing the top 10 cities for CPA issuances in any given year, adding an extra layer of detail to the analysis.  
@@ -151,8 +125,6 @@ The interactive tooltip makes it easy to drill down into specific years and spot
 
 ![Count of WA CPA Licenses by Year with Top 10 Cities Tooltip](image-3.png)
 
-
-## 📊 Example Visualizations  
 
 ### 🌎 Global Distribution of CPA License Status  
 
